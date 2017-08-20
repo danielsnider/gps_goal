@@ -3,4 +3,4 @@
 from gps_goal import gps_goal
 
 if __name__ == '__main__':
-    gps_goal.main()
+    gps_goal.ros_main()

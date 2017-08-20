@@ -3,17 +3,20 @@ cmake_minimum_required(VERSION 2.8.3)
 project(gps_goal)
 
 find_package(catkin REQUIRED COMPONENTS
-  sensor_msgs
   rospy
-  std_srvs
-  cv_bridge
+  tf
+  actionlib
+  actionlib_msgs
+  sensor_msgs
+  geometry_msgs
+  move_base_msgs
 )
 
 catkin_python_setup()
 
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS sensor_msgs rospy std_srvs cv_bridge
+  CATKIN_DEPENDS rospy tf actionlib actionlib_msgs sensor_msgs geometry_msgs move_base_msgs
 )
 
 catkin_install_python(
