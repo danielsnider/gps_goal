@@ -54,8 +54,8 @@ def calc_goal(origin_lat, origin_long, goal_lat, goal_long):
   # Convert polar (distance and azimuth) to x,y translation in meters (needed for ROS) by finding side lenghs of a right-angle triangle
   # Convert azimuth to radians
   azimuth = math.radians(azimuth)
-  x = adjacent = math.cos(heading) * hypotenuse
-  y = opposite = math.sin(heading) * hypotenuse
+  x = adjacent = math.cos(azimuth) * hypotenuse
+  y = opposite = math.sin(azimuth) * hypotenuse
   rospy.loginfo("The translation from the origin to the goal is (x,y) {:.3f}, {:.3f} m.".format(x, y))
 
   return x, y
