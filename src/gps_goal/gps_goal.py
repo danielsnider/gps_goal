@@ -65,12 +65,26 @@ def calc_goal(origin_lat, origin_long, goal_lat, goal_long):
 class GpsGoal():
   def __init__(self):
     rospy.init_node('gps_goal')
-    s = rospy.Service('gps_goal_to_pose',decDegreesToPose,handle_dec_degrees)
-    
+    s = rospy.Service('gps_goal_to_pose',decDegreesToPose,self.handle_dec_degrees)
 
     # Get the lat long coordinates of our map frame's origin which must be publshed on topic /local_xy_origin. We use this to calculate our goal within the map frame.
     self.origin_lat, self.origin_long = get_origin_lat_long()
-
+  def handle_dec_degrees(self,req):
+    # Response to client using decDegreesToPose srv message
+    x,y = calc_goal(self.origin_lat, self.origin_long, req[0], req[1])
+    quat = tf.transformations.quaternion_from_euler(0, 0, req[2])
+    
+    outPoseStamped = PoseStamped()
+    outPoseStamped.header.frame_id = rospy.get_param('~frame_id','map')
+    outPoseStamped.pose.position.x = x
+    outPoseStamped.pose.position.y = y
+    outPoseStamped.pose.position.z = 0
+    outPoseStamped.pose.orientation.x = quat[0]
+    outPoseStamped.pose.orientation.y = quat[1]
+    outPoseStamped.pose.orientation.z = quat[2]
+    outPoseStamped.pose.orientation.w = quat[3]
+ 
+    return decDegreesToPoseResponse(outPoseStamped)
   def do_gps_goal(self, goal_lat, goal_long, z=0, yaw=0, roll=0, pitch=0):
     # Calculate goal x and y in the frame_id given the frame's origin GPS and a goal GPS location
     x, y = calc_goal(self.origin_lat, self.origin_long, goal_lat, goal_long)
