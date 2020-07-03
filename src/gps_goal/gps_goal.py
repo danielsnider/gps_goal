@@ -11,6 +11,8 @@ from geometry_msgs.msg import PoseStamped
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from sensor_msgs.msg import NavSatFix
 
+from gps_goal.srv import decDegreeToPose,decDegreeToPoseResponse
+
 def DMS_to_decimal_format(lat,long):
   # Check for degrees, minutes, seconds format and convert to decimal
   if ',' in lat:
@@ -36,9 +38,9 @@ def DMS_to_decimal_format(lat,long):
 def get_origin_lat_long():
   # Get the lat long coordinates of our map frame's origin which must be publshed on topic /local_xy_origin. We use this to calculate our goal within the map frame.
   rospy.loginfo("Waiting for a message to initialize the origin GPS location...")
-  origin_pose = rospy.wait_for_message('local_xy_origin', PoseStamped)
-  origin_lat = origin_pose.pose.position.y
-  origin_long = origin_pose.pose.position.x
+  decimal_datum = rospy.get_param("/datum")
+  origin_lat = decimal_datum[0]
+  origin_long = decimal_datum[1]
   rospy.loginfo('Received origin: lat %s, long %s.' % (origin_lat, origin_long))
   return origin_lat, origin_long
 
@@ -63,14 +65,8 @@ def calc_goal(origin_lat, origin_long, goal_lat, goal_long):
 class GpsGoal():
   def __init__(self):
     rospy.init_node('gps_goal')
-
-    rospy.loginfo("Connecting to move_base...")
-    self.move_base = actionlib.SimpleActionClient('move_base', MoveBaseAction)
-    self.move_base.wait_for_server()
-    rospy.loginfo("Connected.")
-
-    rospy.Subscriber('gps_goal_pose', PoseStamped, self.gps_goal_pose_callback)
-    rospy.Subscriber('gps_goal_fix', NavSatFix, self.gps_goal_fix_callback)
+    s = rospy.Service('gps_goal_to_pose',decDegreesToPose,handle_dec_degrees)
+    
 
     # Get the lat long coordinates of our map frame's origin which must be publshed on topic /local_xy_origin. We use this to calculate our goal within the map frame.
     self.origin_lat, self.origin_long = get_origin_lat_long()
