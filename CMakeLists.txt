@@ -10,8 +10,12 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   geometry_msgs
   move_base_msgs
+  message_generation
 )
-
+add_service_files(
+  FILES
+  decDegreesToPose.srv
+)
 catkin_python_setup()
 
 catkin_package(
