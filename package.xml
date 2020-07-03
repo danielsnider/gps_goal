@@ -27,7 +27,7 @@
   <run_depend>geometry_msgs</run_depend>
   <run_depend>move_base_msgs</run_depend>
   <run_depend>python-geographiclib</run_depend>
-  <run_depend>click</run_depend>
+  <run_depend>python-click</run_depend>
   <run_depend>message_runtime</run_depend>
 
 </package>
