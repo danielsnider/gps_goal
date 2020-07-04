@@ -10,15 +10,13 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   geometry_msgs
   move_base_msgs
-  message_generation
 )
-add_service_files(
-  FILES
-  decDegreesToPose.srv
-)
+#add_service_files(
+#  FILES
+#  decDegreesToPose.srv
+#)
 catkin_python_setup()
 
-generate_messages( DEPENDENCIES std_msgs geometry_msgs )
 catkin_package(
   LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS rospy tf actionlib actionlib_msgs sensor_msgs geometry_msgs move_base_msgs

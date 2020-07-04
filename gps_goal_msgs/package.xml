@@ -34,11 +34,6 @@
   <!-- Use depend as a shortcut for packages that are both build and exec dependencies -->
   <!--   <depend>roscpp</depend> -->
   <!--   Note that this is equivalent to the following: -->
-  <build_depend>geometry_msgs</build_depend>
-  <build_depend>std_msgs</build_depend>
-  <build_depend>message_generation</build_depend>
-  <exec_depend>geometry_msgs</exec_depend>
-  <exec_depend>std_msgs</exec_depend>
   <!--   <exec_depend>roscpp</exec_depend> -->
   <!-- Use build_depend for packages you need at compile time: -->
   <!--   <build_depend>message_generation</build_depend> -->
