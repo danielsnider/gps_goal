@@ -11,7 +11,7 @@ from geometry_msgs.msg import PoseStamped
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from sensor_msgs.msg import NavSatFix
 
-from gps_goal.srv import decDegreeToPose,decDegreeToPoseResponse
+from gps_goal_msgs.srv import decDegreesToPose,decDegreesToPoseRequest,decDegreesToPoseResponse
 
 def DMS_to_decimal_format(lat,long):
   # Check for degrees, minutes, seconds format and convert to decimal
