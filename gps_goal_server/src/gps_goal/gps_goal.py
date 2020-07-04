@@ -71,8 +71,8 @@ class GpsGoal():
     self.origin_lat, self.origin_long = get_origin_lat_long()
   def handle_dec_degrees(self,req):
     # Response to client using decDegreesToPose srv message
-    x,y = calc_goal(self.origin_lat, self.origin_long, req[0], req[1])
-    quat = tf.transformations.quaternion_from_euler(0, 0, req[2])
+    x,y = calc_goal(self.origin_lat, self.origin_long, req.latititude_dec_deg, req.longitude_dec_deg)
+    quat = tf.transformations.quaternion_from_euler(0, 0, req.heading_radians)
     
     outPoseStamped = PoseStamped()
     outPoseStamped.header.frame_id = rospy.get_param('~frame_id','map')
